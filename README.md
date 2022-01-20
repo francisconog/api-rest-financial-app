@@ -2,7 +2,7 @@
 
 generated using Luminus version "4.30"
 
-FIXME
+This "app" is a challenge of Back-End Development of Alura. The main idea is to develop an app for family budget control. I chose the Clojure Programming Language. This Project also have ClojureScript and Reagent dependencies for later implementation of the Front-End.
 
 ## Prerequisites
 
@@ -16,6 +16,3 @@ To start a web server for the application, run:
 
     lein run 
 
-## License
-
-Copyright © 2022 FIXME
