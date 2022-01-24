@@ -1,0 +1,1 @@
+DROP VIEW outcome_category;
