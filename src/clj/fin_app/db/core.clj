@@ -21,7 +21,8 @@
 (conman/bind-connection *db* "sql/queries.sql"
                         "sql/income_queries.sql"
                         "sql/outcome_queries.sql"
-                        "sql/category_queries.sql")
+                        "sql/category_queries.sql"
+                        "sql/balance_queries.sql")
 
 (defn pgobj->clj [^org.postgresql.util.PGobject pgobj]
   (let [type (.getType pgobj)
