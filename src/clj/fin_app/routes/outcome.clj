@@ -16,7 +16,7 @@
     (let [outcome-list (db/list-outcomes)]
       (response/ok outcome-list))
     (let [category (-> request :query-params (get "description"))
-          outcome-list (db/list-outcomes-by-category {:category category})]
+          outcome-list (db/list-outcomes-of-category {:category category})]
       (response/ok outcome-list))))
 
 (defn add-new-outcome
@@ -69,6 +69,12 @@
       (response/unauthorized
        {:message "Invalid outcome id"}))))
 
+(defn get-outcome-of-month
+  [{{year :year
+     month :month} :path-params}]
+  (let [outcome-list (db/list-outcomes-of-date {:year (Integer. year)
+                                               :month (Integer. month)})]
+    (response/ok outcome-list)))
 
 (defn outcome-routes
   []
@@ -78,4 +84,5 @@
 
    ["/:id" {:get detail-outcome
             :put edit-outcome
-            :delete delete-outcome}]])
+            :delete delete-outcome}]
+   ["/:year/:month" {:get get-outcome-of-month}]])

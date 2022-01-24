@@ -9,6 +9,12 @@ VALUES (:description, :value, :date)
 SELECT description, value, date
 FROM income
 
+-- :name list-incomes-with-word :? :*
+-- :doc retrieves a list of incomes with a given word
+SELECT description, value, date
+FROM income
+WHERE description LIKE '%' || :word || '%'
+
 -- :name list-description-incomes :? :*
 -- :doc retrieves a list of incomes given a description
 SELECT description, value, date
@@ -43,3 +49,9 @@ SELECT * FROM (
     FROM income) AS f
 WHERE id <> :id AND description = :description AND
         month = :month AND year = :year
+
+-- :name list-incomes-of-date :? :*
+-- :doc retrieves a list of incomes within a given month
+SELECT * FROM income
+WHERE EXTRACT(MONTH FROM date) = :month AND 
+      EXTRACT(YEAR FROM date) = :year;

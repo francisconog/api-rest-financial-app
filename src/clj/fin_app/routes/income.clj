@@ -11,8 +11,12 @@
 
 (defn get-income
   [request]
-  (let [income-list (db/list-incomes)]
-    (-> (response/ok income-list))))
+  (if (-> request :query-params empty?)
+    (let [income-list (db/list-incomes)]
+      (response/ok income-list))
+    (let [word (-> request :query-params (get "description"))
+          income-list (db/list-incomes-with-word {:word word})]
+      (response/ok income-list))))
 
 (defn add-new-income
   [{{:keys [description value date]} :params}]
@@ -58,6 +62,12 @@
       (response/unauthorized
        {:message "Invalid income id"}))))
 
+(defn get-income-of-month
+  [{{year :year
+     month :month} :path-params}]
+  (let [income-list (db/list-incomes-of-date {:year (Integer. year)
+                                               :month (Integer. month)})]
+    (response/ok income-list)))
 
 (defn income-routes
   []
@@ -66,4 +76,5 @@
         :post add-new-income}]
    ["/:id" {:get detail-income
             :put edit-income
-            :delete delete-income}]])
+            :delete delete-income}]
+   ["/:year/:month" {:get get-income-of-month}]])

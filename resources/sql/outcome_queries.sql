@@ -15,8 +15,8 @@ SELECT description, value, date, category
 FROM outcome_category
 WHERE description = :description
 
--- :name list-outcomes-by-category :? :*
--- :doc retrieves a list of outcomes given a description
+-- :name list-outcomes-of-category :? :*
+-- :doc retrieves a list of outcomes given a category
 SELECT description, value, date, category
 FROM outcome_category
 WHERE category = :category
@@ -50,3 +50,9 @@ SELECT * FROM (
     FROM outcome) AS f
 WHERE id <> :id AND description = :description AND
         month = :month AND year = :year
+
+-- :name list-outcomes-of-date :? :*
+-- :doc retrieves a list of outcomes within a given month
+SELECT * FROM outcome
+WHERE EXTRACT(MONTH FROM date) = :month AND 
+      EXTRACT(YEAR FROM date) = :year;
