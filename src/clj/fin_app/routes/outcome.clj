@@ -11,7 +11,6 @@
 
 (defn get-outcome
   [request]
-  (println (-> request :query-params empty?))
   (if (-> request :query-params empty?)
     (let [outcome-list (db/list-outcomes)]
       (response/ok outcome-list))
@@ -73,12 +72,12 @@
   [{{year :year
      month :month} :path-params}]
   (let [outcome-list (db/list-outcomes-of-date {:year (Integer. year)
-                                               :month (Integer. month)})]
+                                                :month (Integer. month)})]
     (response/ok outcome-list)))
 
 (defn outcome-routes
   []
-  ["/despesas"
+  ["/despesas" {:middleware [middleware/wrap-restricted]}
    ["" {:get get-outcome
         :post add-new-outcome}]
 

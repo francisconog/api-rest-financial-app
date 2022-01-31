@@ -71,7 +71,7 @@
 
 (defn income-routes
   []
-  ["/receitas"
+  ["/receitas" {:middleware [middleware/wrap-restricted]}
    ["" {:get get-income
         :post add-new-income}]
    ["/:id" {:get detail-income
